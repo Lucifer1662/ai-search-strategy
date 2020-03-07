@@ -1,6 +1,6 @@
 stages:
   - test
-ubuntu:latest
+image: ubuntu:latest
 
 test:
   stage: test
