@@ -3,6 +3,7 @@ stages:
 
 test:
   stage: test
+  image: python:3.7-alpine3.9
   script:
   # this configures Django application to use attached postgres database that is run on `postgres` host
   - export DATABASE_URL=postgres://postgres:@postgres:5432/python-test-app
