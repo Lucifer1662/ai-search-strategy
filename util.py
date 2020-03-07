@@ -3,23 +3,23 @@ This module contains some helper functions for printing actions and boards.
 Feel free to use and/or modify them to help you develop your program.
 """
 
-def print_move(n, x_a, y_a, x_b, y_b, **kwargs):
+def print_move(n, x_a, y_a, x_b, y_b):
     """
     Output a move action of n pieces from square (x_a, y_a)
     to square (x_b, y_b), according to the format instructions.
     """
-    print("MOVE {} from {} to {}.".format(n, (x_a, y_a), (x_b, y_b)), **kwargs)
+    print("MOVE {} from {} to {}.".format(n, (x_a, y_a), (x_b, y_b)))
 
 
-def print_boom(x, y, **kwargs):
+def print_boom(x, y):
     """
     Output a boom action initiated at square (x, y) according to
     the format instructions.
     """
-    print("BOOM at {}.".format((x, y)), **kwargs)
+    print("BOOM at {}.".format((x, y)))
 
 
-def print_board(board_dict, message="", unicode=False, compact=True, **kwargs):
+def print_board(board_dict, message="", unicode=False, compact=True):
     """
     For help with visualisation and debugging: output a board diagram with
     any information you like (tokens, heuristic values, distances, etc.).
@@ -148,4 +148,4 @@ def print_board(board_dict, message="", unicode=False, compact=True, **kwargs):
         else:
             cells.append(str(board_dict[xy])[:3].center(3))
     # print it
-    print(template.format(message, *cells), **kwargs)
+    print(template.format(message, *cells))
