@@ -1,6 +1,5 @@
 stages:
   - test
-  - deploy
 
 test:
   stage: test
@@ -10,7 +9,10 @@ test:
   - apt-get update -qy
   - apt-get install -y python-dev python-pip
   - pip install -r requirements.txt
-  - python manage.py test
+  - python __main__.py tests/test-level-1.json
+  - python __main__.py tests/test-level-2.json
+  - python __main__.py tests/test-level-3.json
+  - python __main__.py tests/test-level-4.json
 
 staging:
   stage: deploy
