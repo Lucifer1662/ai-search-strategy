@@ -1,6 +1,6 @@
 stages:
   - test
-image: ubuntu:latest
+image: docker:stable
 
 test:
   stage: test
@@ -8,8 +8,7 @@ test:
   script:
   # this configures Django application to use attached postgres database that is run on `postgres` host
   - export DATABASE_URL=postgres://postgres:@postgres:5432/python-test-app
-  - apt-get update -qy
-  - apt-get install -y python-dev python-pip
+  - apk add python
   - python -v
   - python __main__.py tests/test-level-1.json
   - python __main__.py tests/test-level-2.json
