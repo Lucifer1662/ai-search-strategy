@@ -14,7 +14,6 @@ def upper_bound_moves(numTokens, pos, blackBoard=None):
     moves = []
     for step in range(1,numTokens+1):
         for dir in [(step,0),(-step,0),(0,step),(0,-step)]:
-            #if(CanMakeMove(pos, dir, blackBoard)):
             move = (pos[0] + dir[0], pos[1] + dir[1])
             if not isInsideBoard(move):
                 continue
@@ -28,17 +27,22 @@ def vector_addition(tup_1: tuple, tup_2: tuple) -> tuple:
     for i in range(len(tup_1)):
         tup.append(tup_1[i] + tup_2[i])
     return tuple(tup)
+"""
+    Lists all the moves a piece of a particular colour can take given the board state
 
-def possible_moves(numTokens: int, pos: tuple, colour: str, board: dict) -> dict:
+    Returns:
+        List of Tuples: [(1, (2, 2)),...]
+            where 1 refers to the stack size and (2, 2) refers to the position moved to
+"""
+def possible_moves(numTokens: int, pos: tuple, colour: str, board: dict) -> list:
     moves = []
     for step in range(1,numTokens+1):
         # List of all possible moves
         for dir in [(step,0),(-step,0),(0,step),(0,-step)]:
             move = (pos[0]+dir[0],pos[1]+dir[1])
-            print(f"{pos} to {move} can be done: {CanMakeMove(move, colour, board)}")
             if(CanMakeMove(move, colour, board)):
                 for amountOfTokens in range(1,numTokens+1):
-                    moves.append((amountOfTokens, pos, move))
+                    moves.append((amountOfTokens, move))
     return moves
 
 
