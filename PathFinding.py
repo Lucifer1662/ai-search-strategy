@@ -3,7 +3,7 @@ def isInsideBoard(pos):
     return pos[0] < 8 and pos[0] >= 0 and pos[1] < 8  and pos[1] >= 0
 
 def CanMakeMove(pos, move, blackBoard):
-    newPos = pos+move
+    newPos = (pos[0]+move[0], pos[1]+move[1])
     return not newPos in blackBoard and isInsideBoard(newPos) 
 
 def AvailableActions(numTokens, pos, blackBoard):
@@ -12,7 +12,7 @@ def AvailableActions(numTokens, pos, blackBoard):
         for dir in [(step,0),(-step,0),(0,step),(0,-step)]:
             if(CanMakeMove(pos, dir, blackBoard)):
                 for amountOfTokens in range(1,numTokens+1):
-                    moves.append((amountOfTokens, pos, pos+dir))
+                    moves.append((amountOfTokens, pos, (pos[0]+dir[0],pos[1]+dir[1])))
     return moves
 
 
@@ -44,3 +44,5 @@ def FindPaths(tiles, targets, blackBoard):
             newTokens = MakeMove(tokens, move)
 
 
+#def get_possible_moves(pos, height, board):
+    
