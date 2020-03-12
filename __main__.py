@@ -3,6 +3,8 @@ import json
 
 from util import print_move, print_boom, print_board
 from explode import PossibleWinningExplosions
+from PathFinding import possible_moves, isInsideBoard, upper_bound_moves
+from bfs import map_data_to_board
 #from PathFinding import FindPath
 
 def numberOfWhite(tokens):
@@ -16,34 +18,18 @@ def main():
         data = json.load(file)
 
     # TODO: find and print winning action sequence
-    print(data)
-    board = {}
-    for token in data['white']:
-        numOfTokens = token[0]
-        x = token[1]
-        y = token[2]
-        board[(x,y)] = "w"
-
-    for token in data['black']:
-        numOfTokens = token[0]
-        x = token[1]
-        y = token[2]
-        board[(x,y)] = "b"
-
-    print_board(board, "", False, False)
-    
-    
-    #steps
-    #create graph of black nodes
-    #apply 
-    numOfWhite = numberOfWhite(data["white"])
-    targetss = PossibleWinningExplosions(data["black"], numOfWhite)
-    print(targetss)
-    #for targets in targetss:
-    #    (success, path) = FindPath(data["white"], targets)
+    print("Data", data)
+    board = map_data_to_board(data)
+    print("Board", board)
+    for i, key in enumerate(board):
+        print(f"Currently {board[key][0]} piece at {key} with k={board[key][1]}, has available actions:")
+        moves = possible_moves(board[key][1], key, board[key][0], board)
+        for move in moves:
+            print(f"\t {move}")
+        print("")
 
     
-    
+    Path
             
     
     
