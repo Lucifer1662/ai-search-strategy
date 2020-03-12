@@ -15,8 +15,6 @@ def AvailableActions(numTokens, pos, blackBoard):
                     moves.append((amountOfTokens, pos, (pos[0]+dir[0],pos[1]+dir[1])))
     return moves
 
-
-
 def MakeMove(tiles, move):
     tiles = tiles.copy()
     (numTokens, pos, to) = move
@@ -44,5 +42,36 @@ def FindPaths(tiles, targets, blackBoard):
             newTokens = MakeMove(tokens, move)
 
 
-#def get_possible_moves(pos, height, board):
+    
+class Node:
+    def __init__(self, pos, numTokens, parent):
+        self.pos = pos
+        self.numTokens = numTokens
+        self.parent = parent
+
+def backTrack(node: Node, track: list):
+    track.append((node.pos, node.numTokens))
+    if(node.parent):
+        backTrack(node.parent, track)
+    return track
+
+def NeighborNodes(parent, moves):
+    return map(lambda move: Node(move[1], move[0], parent), moves)
+
+
+def move_to(numTokens, pos, target, blackBoard):
+    nodes = [Node(pos,numTokens, None)]
+    visited = set()
+    for node in nodes:
+        if(node.pos == target):
+            track = []
+            backTrack(node, track).reverse()
+            return track
+
+        visited.add((node.pos, node.numTokens))
+        for n in NeighborNodes(node, AvailableActions(node.numTokens, pos, blackBoard)):
+            if not (n.pos, n.numTokens) in visited:
+                nodes.append(n)
+    return []
+
     
