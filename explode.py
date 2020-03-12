@@ -47,13 +47,17 @@ def islandsNearby(pos, islands):
                 nerbyIslands.add(islands[neighborPos])
     return nerbyIslands
 
+def isInBordBounds(pos):
+    (x, y) = pos
+    return x >= 0 and x <= 7 and y >= 0 and y <= 8
+
 def amountOfDamage(islands):
     damage = {}
     for middlePos in islands:
         for x in range(-1,2):
             for y in range(-1,2):
                 pos = (middlePos[0]+x,middlePos[1]+y)
-                if(not pos in islands ):
+                if(not pos in islands and isInBordBounds(pos) ):
                     damage[pos] = islandsNearby(pos, islands)
     return damage
     
@@ -82,9 +86,6 @@ def pickLocations(index, sortedIslandsThatWillBeBlowUpAt, numTokens, targets, ta
     targets.append(pos)
     
     sortedIslandsThatWillBeBlowUpAt = list(filter(lambda x: x[1].union(islands) != islands, sortedIslandsThatWillBeBlowUpAt))
-    print(islands)
-    print(sortedIslandsThatWillBeBlowUpAt)
-    print("---------------------")
     if(len(sortedIslandsThatWillBeBlowUpAt) == 0):
         targetss.append(targets)
         return
@@ -93,21 +94,17 @@ def pickLocations(index, sortedIslandsThatWillBeBlowUpAt, numTokens, targets, ta
         return
 
   
-    targetss = []
     for i in range(len(sortedIslandsThatWillBeBlowUpAt)):
         pickLocations(i, sortedIslandsThatWillBeBlowUpAt, numTokens -1, targets.copy(), targetss)
 
 
 def PossibleWinningExplosions(blackPieces, numWhite):
-    print(set([0,1]).union(set([2])) == set([2]))
     board1 = tokensToDic(blackPieces)
     islands = boardToIslands(board1)
     islandsThatWillBlowUpAt = amountOfDamage(islands)
-    print_board(islandsThatWillBlowUpAt)
     sortedIslands = sortAmountofDamage(islandsThatWillBlowUpAt)
-    print(sortedIslands)
     targetss = []
     pickLocations(0, sortedIslands, numWhite, [], targetss)
-    #for i in range(len(sortedIslands)):
-    #    pickLocations(i, sortedIslands, numWhite, [], targetss)
+    for i in range(len(sortedIslands)):
+        pickLocations(i, sortedIslands, numWhite, [], targetss)
     return targetss
