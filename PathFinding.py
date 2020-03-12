@@ -35,9 +35,6 @@ def tokensToDic(tokens):
         board[(x,y)] = token[0]
     return board
 
-def FindPaths(tiles, targets, blackBoard):
-    
-
 
 def FindPaths(tiles, targets, blackBoard):
     tokens = tokensToDic(tiles)
@@ -45,4 +42,5 @@ def FindPaths(tiles, targets, blackBoard):
         numTokens = tokens[pos]
         for move in AvailableActions(numTokens, pos, blackBoard):
             newTokens = MakeMove(tokens, move)
+
 
