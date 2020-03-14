@@ -49,7 +49,7 @@ def islandsNearby(pos, islands):
 
 def isInBordBounds(pos):
     (x, y) = pos
-    return x >= 0 and x <= 7 and y >= 0 and y <= 8
+    return x >= 0 and x <= 7 and y >= 0 and y <= 7
 
 def amountOfDamage(islands):
     damage = {}
@@ -108,3 +108,22 @@ def PossibleWinningExplosions(blackPieces, numWhite):
     for i in range(len(sortedIslands)):
         pickLocations(i, sortedIslands, numWhite, [], targetss)
     return targetss
+
+
+def ExplosionTileDamage(blackPieces):
+    board1 = tokensToDic(blackPieces)
+    islands = boardToIslands(board1)
+    return amountOfDamage(islands)
+
+def removeDamageTilesWithIslands(islands, damageTiles):
+    newDamageTiles = {}
+    for pos in damageTiles:
+        if(not isSubset(islands, damageTiles[pos])):
+            newDamageTiles[pos] = set()
+            for islandId in damageTiles[pos]:
+                if not islandId in islands:
+                    newDamageTiles[pos].add(islandId)
+    return newDamageTiles
+
+def isSubset(s:set, sub:set):
+    return sub.union(s) == s    
