@@ -2,9 +2,9 @@ import sys
 import json
 
 from util import print_move, print_boom, print_board
-from explode import PossibleWinningExplosions
+from explode import PossibleWinningExplosions, ExplosionTileDamage
 from PathFinding import possible_moves, isInsideBoard, upper_bound_moves
-from bfs import map_data_to_board
+from bfs import map_data_to_board, get_into_goal_state, move_to, removeDamageTilesWithIslands
 #from PathFinding import FindPath
 
 def numberOfWhite(tokens):
@@ -18,8 +18,15 @@ def main():
         data = json.load(file)
 
     # TODO: find and print winning action sequence
-    print("Data", data)
-    board = map_data_to_board(data)
+    print("Data", data) 
+    debug_get_into_goal_state(data)
+    
+
+    
+
+
+def debug_possible_moves(data):  
+    board = map_data_to_board(data)    
     print("Board", board)
     for i, key in enumerate(board):
         print(f"Currently {board[key][0]} piece at {key} with k={board[key][1]}, has available actions:")
@@ -27,12 +34,15 @@ def main():
         for move in moves:
             print(f"\t {move}")
         print("")
+    
+def debug_get_into_goal_state(data):
+    board = map_data_to_board(data)
+    print_board(board)
 
+    targets = ExplosionTileDamage(data["black"])
     
-    Path
-            
-    
-    
+    (success, moves) = get_into_goal_state("white", board, targets)
+    print("end", success, moves)
     
 
 def positionInBetween(pos1, pos2):
