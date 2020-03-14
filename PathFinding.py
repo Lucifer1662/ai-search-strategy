@@ -5,10 +5,11 @@ def isInsideBoard(pos):
 def CanMakeMove(move, colour, board):
     if not isInsideBoard(move):
         return False
-    try:
+    if move in board:
+        #if the same colour and not frozen
         return board[move][0] == colour
-    except KeyError:
-        return True
+    #else empty square
+    return True
 
 def upper_bound_moves(numTokens, pos, blackBoard=None):
     moves = []
@@ -42,7 +43,9 @@ def possible_moves(numTokens: int, pos: tuple, colour: str, board: dict) -> list
             move = (pos[0]+dir[0],pos[1]+dir[1])
             if(CanMakeMove(move, colour, board)):
                 for amountOfTokens in range(1,numTokens+1):
-                    moves.append((amountOfTokens, move))
+                    if(not pos in board or not board[pos][2] or amountOfTokens != numTokens):
+                        moves.append((amountOfTokens, move))
+                   
     return moves
 
 def MakeMove(tiles, move):
