@@ -8,7 +8,4 @@ test:
   # this configures Django application to use attached postgres database that is run on `postgres` host
   - export DATABASE_URL=postgres://postgres:@postgres:5432/python-test-app
   - python3 -v
-  - python3 __main__.py tests/test-level-1.json
-  - python3 __main__.py tests/test-level-2.json
-  - python3 __main__.py tests/test-level-3.json
-  - python3 __main__.py tests/test-level-4.json
+  - python3 run_tests.py

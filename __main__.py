@@ -2,47 +2,44 @@ import sys
 import json
 
 from util import print_move, print_boom, print_board
-from explode import PossibleWinningExplosions, ExplosionTileDamage
-from PathFinding import possible_moves, isInsideBoard, upper_bound_moves
-from bfs import map_data_to_board, get_into_goal_state, move_to, removeDamageTilesWithIslands
-#from PathFinding import FindPath
-
-def numberOfWhite(tokens):
-    count = 0
-    for token in tokens:
-        count += token[0]
-    return count
+from path_finding import possible_moves, isInsideBoard
+from bfs_dfs import bfs_dfs, bfs_dfs_optimal, bfs_dfs_depth_test
+from print_moves import print_moves
+from board import Board
 
 def main():
     with open(sys.argv[1]) as file:
         data = json.load(file)
 
-    # TODO: find and print winning action sequence
-    print("Data", data) 
-    debug_get_into_goal_state(data)
-    
-
-    
-
+    debug_bfs_dfs(data)
 
 def debug_possible_moves(data):  
-    board = map_data_to_board(data)    
+    board = Board(data)    
     print("Board", board)
     for i, key in enumerate(board):
         print(f"Currently {board[key][0]} piece at {key} with k={board[key][1]}, has available actions:")
-        moves = possible_moves(board[key][1], key, board[key][0], board)
+        moves = possible_moves(board[key][1], key, board)
         for move in moves:
             print(f"\t {move}")
         print("")
-    
-def debug_get_into_goal_state(data):
-    board = map_data_to_board(data)
-    print_board(board)
 
-    targets = ExplosionTileDamage(data["black"])
-    
-    (success, moves) = get_into_goal_state("white", board, targets)
-    print("end", success, moves)
+def debug_bfs_dfs(data):  
+    board = Board(data)    
+    board.print()
+    (success, moves) = bfs_dfs(board)
+    print_moves(moves)
+
+def debug_bfs_dfs_test(data):  
+    board = Board(data)    
+    board.print()
+    max_depth = bfs_dfs_depth_test(board)
+    print("Max Depth:", max_depth)
+
+def debug_bfs_dfs_optimal(data):  
+    board = Board(data)    
+    board.print()
+    (success, moves) = bfs_dfs_optimal(board)
+    print_moves(moves)
     
 
 def positionInBetween(pos1, pos2):
