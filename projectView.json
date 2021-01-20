@@ -5,8 +5,9 @@
     "images": [
       {
        "path": "snaking.png",
-       "exclude":"true",
-      },
+       "exclude":"true"
+      }
    ],
    "pdf":"aireport.pdf"
 }
+
